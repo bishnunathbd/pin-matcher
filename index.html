@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input id="random-number" class="form-control" type="text">
+                    <button id="generate-pin" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input id="output-value" class="form-control" type="text">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                              <div onclick="printOutput(id)" class="button number" id="7">7</div>
+                              <div onclick="printOutput(id)" class="button number" id="8">8</div>
+                              <div onclick="printOutput(id)" class="button number" id="9">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div onclick="printOutput(id)" class="button number" id="4">4</div>
+                              <div onclick="printOutput(id)" class="button number" id="5">5</div>
+                              <div onclick="printOutput(id)" class="button number" id="6">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div onclick="printOutput(id)" class="button number" id="1">1</div>
+                              <div onclick="printOutput(id)" class="button number" id="2">2</div>
+                              <div onclick="printOutput(id)" class="button number" id="3">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button operator" id="<"><</div>
+                                <div onclick="printOutput(id)" id="0" class="button number">0</div>
+                                <div class="button operator" id="C">C</div>
+                            </div>
+                            <div>
+                                <button type="submit" id="check-btn" class="submit-btn">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="notify" class="notify-section">
+            <p id="error" class="notify">❌ Pin Didn't Match, Please try again</p>
+            <p id="success" class="notify">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+    </div>
+    <script>
+        // generate random number
+        document.getElementById('generate-pin').addEventListener('click', function () {
+            var number = Math.random() * 8999 + 1000;
+            var randomNumber = Math.floor(number);
+            document.getElementById('random-number').value = randomNumber;
+        })
+
+        // document.getElementById('7').addEventListener('click', function () {
+        //     const seven = document.getElementById('7').innerText;
+        //     const output = document.getElementById('output-value').value;
+        //     const result = output + seven;
+        //     document.getElementById('output-value').value = result;
+        // })
+
+        function printOutput(id) {
+            const inputValue = document.getElementById(id).innerText;
+            const outputValue = document.getElementById('output-value').value;
+            const total = outputValue + inputValue;
+            document.getElementById('output-value').value = total;
+        }
+
+        // document.getElementById('8').addEventListener('click', function () {
+        //     printOutput('8');
+        // })
+        
+        document.getElementById('check-btn').addEventListener('click',function () {
+            const randomOutput = document.getElementById('random-number').value;
+            const numberOutput = document.getElementById('output-value').value;
+
+            if (randomOutput == numberOutput) {
+                document.getElementById('success').style.display = 'block';
+            } else {
+                document.getElementById('error').style.display = 'block';
+            }
+        })
+
+        document.getElementById('C').addEventListener('click', function () {
+            document.getElementById('output-value').value = '';
+        })
+
+        document.getElementById('<').addEventListener('click', function () {
+            const numberOutput = document.getElementById('output-value').value;
+            const totalNumber = numberOutput.substr(0, numberOutput.length-1);
+            // console.log(output);
+            document.getElementById('output-value').value = totalNumber;
+        })
+
+    </script>
+</body>
+</html>
